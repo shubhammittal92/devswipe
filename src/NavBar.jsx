@@ -1,6 +1,8 @@
 // import React from 'react'
-
+import {  useSelector } from "react-redux";
 const NavBar = () => {
+  const user = useSelector((store) => store.user);
+  // const dispatch = useDispatch();
   return (
     <>
        <div className="navbar bg-base-300">
@@ -9,7 +11,8 @@ const NavBar = () => {
         </div>
         <div className="flex-none gap-2">
           
-          <div className="dropdown dropdown-end mx-5">
+        { user && (<div className="dropdown dropdown-end mx-5 flex items-center">
+          <p>Welcome, {user.firstName}</p>
             <div
               tabIndex={0}
               role="button"
@@ -39,7 +42,7 @@ const NavBar = () => {
                 <a>Logout</a>
               </li>
             </ul>
-          </div>
+          </div>)}
         </div>
       </div>
     </>
