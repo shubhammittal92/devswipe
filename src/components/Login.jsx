@@ -1,4 +1,3 @@
-// src/Login.jsx
 import { useState } from "react";
 import axios from "axios";
 import { useDispatch } from "react-redux";
@@ -7,8 +6,8 @@ import { useNavigate } from "react-router-dom";
 import { BASE_URL } from "../utils/constants";
 
 const Login = () => {
-  const [emailId, setEmailId] = useState("john.doe@example.com");
-  const [password, setPassword] = useState("Strong@1234");
+  const [emailId, setEmailId] = useState("");
+  const [password, setPassword] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [isLoginForm, setIsLoginForm] = useState(true);
@@ -16,12 +15,14 @@ const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-
   const handleLogin = async () => {
     try {
       const res = await axios.post(
         BASE_URL + "/login",
-        { emailId, password },
+        {
+          emailId,
+          password,
+        },
         { withCredentials: true }
       );
       dispatch(addUser(res.data));
@@ -34,12 +35,12 @@ const Login = () => {
   const handleSignUp = async () => {
     try {
       const res = await axios.post(
-        "http://localhost:3000/signup",
+        BASE_URL + "/signup",
         { firstName, lastName, emailId, password },
         { withCredentials: true }
       );
       dispatch(addUser(res.data.data));
-      return navigate("/");
+      return navigate("/profile");
     } catch (err) {
       setError(err?.response?.data || "Something went wrong");
     }
@@ -125,5 +126,4 @@ const Login = () => {
     </div>
   );
 };
-
 export default Login;
