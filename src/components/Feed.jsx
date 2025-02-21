@@ -13,7 +13,7 @@ const Feed = () => {
   const getFeed = async () => {
     if (feed) return;
     try {
-      const res = await axios.get("https://devtinder-3-a7nl.onrender.com/"+ "/feed", {
+      const res = await axios.get("https://devtinder-3-a7nl.onrender.com"+ "/feed", {
         withCredentials: true,
       });
       dispatch(addFeed(res?.data?.data));
