@@ -20,13 +20,14 @@ const Body = () => {
       });
       dispatch(addUser(res.data));
     } catch (err) {
-      if (err.status === 401) {
-        navigate("/login");
+      if (err.response && err.response.status === 401) {
+        // User is not logged in, but don't redirect here
+        console.log("User is not logged in");
+      } else {
+        console.error(err);
       }
-      console.error(err);
     }
   };
-
   useEffect(() => {
     fetchUser();
   }, []);
