@@ -15,7 +15,7 @@ const Body = () => {
   const fetchUser = async () => {
     if (userData) return;
     try {
-      const res = await axios.get("http://localhost:3000/profile/view", {
+      const res = await axios.get("https://devtinder-4-xzbi.onrender.com/profile/view", {
         withCredentials: true, 
       });
       
