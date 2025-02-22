@@ -15,17 +15,16 @@ const Body = () => {
   const fetchUser = async () => {
     if (userData) return;
     try {
-      const res = await axios.get(BASE_URL + "/profile/view", {
-        withCredentials: true,
+      const res = await axios.get("http://localhost:3000/profile/view", {
+        withCredentials: true, 
       });
+      
       dispatch(addUser(res.data));
     } catch (err) {
-      if (err.response && err.response.status === 401) {
-        // User is not logged in, but don't redirect here
-        console.log("User is not logged in");
-      } else {
-        console.error(err);
+      if (err.status === 401) {
+        navigate("/login");
       }
+      console.error(err);
     }
   };
   useEffect(() => {

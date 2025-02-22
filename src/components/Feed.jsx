@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { addFeed } from "../utils/feedSlice";
 import { useEffect } from "react";
 import UserCard from "./UserCard";
+import { BASE_URL } from "../utils/constants";
 
 const Feed = () => {
   const feed = useSelector((store) => store.feed);
@@ -13,7 +14,7 @@ const Feed = () => {
   const getFeed = async () => {
     if (feed) return;
     try {
-      const res = await axios.get("https://devtinder-2-i0yj.onrender.com"+ "/feed", {
+      const res = await axios.get( BASE_URL + "/feed", {
         withCredentials: true,
       });
       dispatch(addFeed(res?.data?.data));
