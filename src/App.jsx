@@ -98,7 +98,7 @@ function App() {
               animate={controls}
               style={{ originX: 0.5, originY: 0.5 }}
             >
-              <AnimatedLogo>DEVSWIPE</AnimatedLogo>
+              <AnimatedLogo>DevSwipe</AnimatedLogo>
             </motion.div>
             
             {particles.map((particle) => (
