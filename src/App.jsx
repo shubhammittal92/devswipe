@@ -41,9 +41,9 @@ function App() {
   if (loading) {
     return (
       <LoadingContainer>
-        <Logo>ConnectHub</Logo>
+        <Logo>Making it look fast..</Logo>
         <PulseLoader 
-          color="#2e7d32"
+          color="#0d47a1"
           size={20}
           margin={10}
           speedMultiplier={0.8}
