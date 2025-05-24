@@ -1,3 +1,4 @@
+// App.js
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Body from "./components/Body";
 import Login from "./components/Login";
@@ -9,34 +10,51 @@ import Connections from "./components/Connections";
 import Requests from "./components/Requests";
 import Chat from "./components/Chat";
 import { useState, useEffect } from "react";
-import { ClipLoader } from "react-spinners"; // Replaced Oval with ClipLoader
+import { PulseLoader } from "react-spinners";
+import { 
+  LoadingContainer,
+  LoadingText,
+  Logo,
+  ProgressBarContainer,
+  ProgressBar
+} from "./Loaded.style.js";
 
 function App() {
   const [loading, setLoading] = useState(true);
+  const [progress, setProgress] = useState(0);
 
   useEffect(() => {
     const timer = setTimeout(() => {
       setLoading(false);
-    }, 2000); // Adjust time as needed
-    return () => clearTimeout(timer);
+    }, 3000);
+    
+    const progressInterval = setInterval(() => {
+      setProgress(prev => (prev >= 100 ? 100 : prev + 10));
+    }, 200);
+    
+    return () => {
+      clearTimeout(timer);
+      clearInterval(progressInterval);
+    };
   }, []);
 
   if (loading) {
     return (
-      <div style={{
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        height: '100vh',
-        backgroundColor: '#f5f5f5'
-      }}>
-        <ClipLoader
-          color="#4fa94d" // Green color (similar to Oval)
-          loading={loading}
-          size={80}
-          aria-label="Loading Spinner"
+      <LoadingContainer>
+        <Logo>ConnectHub</Logo>
+        <PulseLoader 
+          color="#2e7d32"
+          size={20}
+          margin={10}
+          speedMultiplier={0.8}
         />
-      </div>
+        <LoadingText>
+          Loading your experience {progress}%
+        </LoadingText>
+        <ProgressBarContainer>
+          <ProgressBar progress={progress} />
+        </ProgressBarContainer>
+      </LoadingContainer>
     );
   }
 
