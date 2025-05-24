@@ -1,65 +1,66 @@
-// LoadingScreen.styles.js
-import styled, { keyframes } from 'styled-components';
+import styled from 'styled-components';
+import { motion } from 'framer-motion';
 
-// Animation keyframes
-const fadeIn = keyframes`
-  from { opacity: 0; }
-  to { opacity: 1; }
+export const GradientBackground = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #0d47a1, #1976d2, #42a5f5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
 `;
 
-const bounce = keyframes`
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-15px); }
-`;
-
-const gradient = keyframes`
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-`;
-
-// Styled components
 export const LoadingContainer = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
-  height: 100vh;
-  background: linear-gradient(-45deg, #f5f5f5, #e3f2fd, #bbdefb, #e1f5fe);
-  background-size: 400% 400%;
-  animation: ${gradient} 8s ease infinite;
-`;
-
-export const LoadingText = styled.div`
-  margin-top: 20px;
-  font-size: 1.5rem;
-  color: #1565c0;  // Darker blue for text
-  font-weight: 500;
-  animation: ${fadeIn} 1.5s ease-in-out infinite alternate;
-`;
-
-export const Logo = styled.div`
-  font-size: 2.5rem;
-  font-weight: bold;
-  color: #1976d2;  // Primary blue
-  margin-bottom: 30px;
-  animation: ${bounce} 2s ease infinite;
-  text-shadow: 0 2px 4px rgba(0,0,0,0.1);
-`;
-
-export const ProgressBarContainer = styled.div`
-  width: 200px; 
-  height: 8px; 
-  background-color: #e0e0e0; 
-  border-radius: 4px;
-  margin-top: 20px;
+  justify-content: center;
+  padding: 2rem;
+  border-radius: 15px;
+  max-width: 500px;
+  width: 90%;
+  position: relative;
   overflow: hidden;
 `;
 
-export const ProgressBar = styled.div`
-  width: ${props => props.progress}%;
+export const AnimatedLogo = styled(motion.h1)`
+  font-size: 2.5rem;
+  color: white;
+  margin-bottom: 2rem;
+  font-weight: 700;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+`;
+
+export const LoadingText = styled(motion.p)`
+  color: white;
+  font-size: 1.2rem;
+  margin: 1rem 0;
+  text-align: center;
+`;
+
+export const ProgressBarContainer = styled.div`
+  width: 100%;
+  height: 10px;
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: 5px;
+  overflow: hidden;
+  position: relative;
+`;
+
+export const ProgressBar = styled(motion.div)`
   height: 100%;
-  background: linear-gradient(90deg, #90caf9, #1976d2);  // Light to dark blue gradient
-  transition: width 0.3s ease;
-  border-radius: 4px;
+  background: linear-gradient(90deg, #ffffff, #bbdefb);
+  border-radius: 5px;
+  width: 100%;
+`;
+
+export const Particle = styled(motion.div)`
+  position: absolute;
+  background-color: rgba(255, 255, 255, 0.6);
+  border-radius: 50%;
+  pointer-events: none;
 `;
