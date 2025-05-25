@@ -54,7 +54,7 @@ function App() {
   useEffect(() => {
     const animateProgress = async () => {
       await animate(progress, 100, {
-        duration: 3,
+        duration: 4,
         ease: "easeInOut",
         onUpdate: (latest) => {
           // Change text every 20% progress
