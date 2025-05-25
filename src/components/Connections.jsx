@@ -29,19 +29,22 @@ const Connections = () => {
   if (!connections) return null;
 
   // Filter connections based on both name and skills search terms
-  const filteredConnections = connections.filter(connection => {
-    const nameMatch = `${connection.firstName} ${connection.lastName}`
-      .toLowerCase()
-      .includes(nameSearchTerm.toLowerCase());
-    
-    const skillMatch = skillSearchTerm === "" || 
-      (connection.skills && 
-       connection.skills.some(skill => 
-         skill.toLowerCase().includes(skillSearchTerm.toLowerCase())
-      );
-    
-    return nameMatch && skillMatch;
-  });
+const filteredConnections = connections.filter(connection => {
+  const nameMatch = `${connection.firstName} ${connection.lastName}`
+    .toLowerCase()
+    .includes(nameSearchTerm.toLowerCase());
+
+  const skillMatch =
+    skillSearchTerm === "" ||
+    (connection.skills &&
+      connection.skills.some(skill =>
+        skill.toLowerCase().includes(skillSearchTerm.toLowerCase())
+      )
+    );
+
+  return nameMatch && skillMatch;
+});
+
 
   if (connections.length === 0) return <h1>No Connections Found</h1>;
 
