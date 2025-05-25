@@ -45,7 +45,7 @@ const Connections = () => {
           <p>No connections match your search</p>
         ) : (
           filteredConnections.map((connection) => {
-            const { _id, firstName, lastName, photoUrl, age, gender, about } =
+            const { _id, firstName, lastName, photoUrl, age, gender, about, skills } =
               connection;
 
             return (
@@ -60,12 +60,28 @@ const Connections = () => {
                     src={photoUrl}
                   />
                 </div>
-                <div className="text-left mx-4">
+                <div className="text-left mx-4 flex-1">
                   <h2 className="font-bold text-xl">
                     {firstName + " " + lastName}
                   </h2>
                   {age && gender && <p>{age + ", " + gender}</p>}
-                  <p>{about}</p>
+                  <p className="my-2">{about}</p>
+                  
+                  {/* Skills display */}
+                  {skills && skills.length > 0 && (
+                    <div className="mt-2">
+                      <div className="flex flex-wrap gap-2">
+                        {skills.map((skill, index) => (
+                          <span 
+                            key={index} 
+                            className="badge badge-outline rounded-full py-2 px-4"
+                          >
+                            {skill}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  )}
                 </div>
                 <Link to={"/chat/" + _id}>
                   <button className="btn btn-primary">Chat</button>
