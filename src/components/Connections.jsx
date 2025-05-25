@@ -8,7 +8,8 @@ import { Link } from "react-router-dom";
 const Connections = () => {
   const connections = useSelector((store) => store.connections);
   const dispatch = useDispatch();
-  const [searchTerm, setSearchTerm] = useState("");
+  const [nameSearchTerm, setNameSearchTerm] = useState("");
+  const [skillSearchTerm, setSkillSearchTerm] = useState("");
   
   const fetchConnections = async () => {
     try {
@@ -27,10 +28,19 @@ const Connections = () => {
 
   if (!connections) return null;
 
-  // Filter connections based on search term (case-insensitive)
+  // Filter connections based on both name and skills search terms
   const filteredConnections = connections.filter(connection => {
-    const fullName = `${connection.firstName} ${connection.lastName}`.toLowerCase();
-    return fullName.includes(searchTerm.toLowerCase());
+    const nameMatch = `${connection.firstName} ${connection.lastName}`
+      .toLowerCase()
+      .includes(nameSearchTerm.toLowerCase());
+    
+    const skillMatch = skillSearchTerm === "" || 
+      (connection.skills && 
+       connection.skills.some(skill => 
+         skill.toLowerCase().includes(skillSearchTerm.toLowerCase())
+      );
+    
+    return nameMatch && skillMatch;
   });
 
   if (connections.length === 0) return <h1>No Connections Found</h1>;
@@ -92,20 +102,38 @@ const Connections = () => {
         )}
       </div>
 
-      {/* Right side - Search bar */}
+      {/* Right side - Search bars */}
       <div className="w-1/4 p-4 mt-10">
-        <div className="sticky top-4">
+        <div className="sticky top-4 space-y-4">
+          {/* Name Search */}
           <div className="form-control">
+            <label className="label">
+              <span className="label-text">Search by name</span>
+            </label>
             <input
               type="text"
               placeholder="Search connections..."
               className="input input-bordered w-full"
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
+              value={nameSearchTerm}
+              onChange={(e) => setNameSearchTerm(e.target.value)}
             />
           </div>
           
-          {/* Optional: Display search results count */}
+          {/* Skills Search */}
+          <div className="form-control">
+            <label className="label">
+              <span className="label-text">Search by skills</span>
+            </label>
+            <input
+              type="text"
+              placeholder="Search by skills..."
+              className="input input-bordered w-full"
+              value={skillSearchTerm}
+              onChange={(e) => setSkillSearchTerm(e.target.value)}
+            />
+          </div>
+          
+          {/* Search results count */}
           <div className="mt-2 text-sm text-gray-400">
             Showing {filteredConnections.length} of {connections.length} connections
           </div>
