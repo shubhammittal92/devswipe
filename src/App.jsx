@@ -52,40 +52,39 @@ function App() {
   ];
 
   useEffect(() => {
-    const animateProgress = async () => {
-      await animate(progress, 100, {
-        duration: 4,
-        ease: "easeInOut",
-        onUpdate: (latest) => {
-          // Change text every 20% progress
-          const textIndex = Math.min(
-            Math.floor(latest / 20),
-            loadingTexts.length - 1
-          );
-          setCurrentTextIndex(textIndex);
-        }
-      });
-      setLoading(false);
-    };
+  const loginLoadTime = parseInt(sessionStorage.getItem("loginPageLoadTime") || "0");
+  const adjustedDuration = loginLoadTime > 1000 ? loginLoadTime / 1000 : 4;
 
-    animateProgress();
-
-    // Logo animation sequence
-    controls.start({
-      scale: [1, 1.1, 1],
-      rotate: [0, 5, -5, 0],
-      transition: {
-        duration: 2,
-        repeat: Infinity,
-        repeatType: "reverse",
-        ease: "easeInOut"
+  const animateProgress = async () => {
+    await animate(progress, 100, {
+      duration: adjustedDuration,
+      ease: "easeInOut",
+      onUpdate: (latest) => {
+        const textIndex = Math.min(Math.floor(latest / 20), loadingTexts.length - 1);
+        setCurrentTextIndex(textIndex);
       }
     });
+    setLoading(false);
+  };
 
-    return () => {
-      progress.stop();
-    };
-  }, []);
+  animateProgress();
+
+  controls.start({
+    scale: [1, 1.1, 1],
+    rotate: [0, 5, -5, 0],
+    transition: {
+      duration: 2,
+      repeat: Infinity,
+      repeatType: "reverse",
+      ease: "easeInOut"
+    }
+  });
+
+  return () => {
+    progress.stop();
+  };
+}, []);
+
 
   const progressText = useTransform(progress, (value) => `${Math.round(value)}%`);
 

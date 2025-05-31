@@ -17,18 +17,15 @@ const Login = () => {
 
   useEffect(() => {
     const timeTaken = performance.now();
+    sessionStorage.setItem("loginPageLoadTime", timeTaken.toFixed(0));
     console.log(`Login page loaded in ${timeTaken.toFixed(2)} ms`);
   }, []);
-
 
   const handleLogin = async () => {
     try {
       const res = await axios.post(
         BASE_URL + "/login",
-        {
-          emailId,
-          password,
-        },
+        { emailId, password },
         { withCredentials: true }
       );
       dispatch(addUser(res.data));
@@ -45,7 +42,7 @@ const Login = () => {
         { firstName, lastName, emailId, password },
         { withCredentials: true }
       );
-    dispatch(addUser(res.data.data));
+      dispatch(addUser(res.data.data));
       return navigate("/profile");
     } catch (err) {
       setError(err?.response?.data || "Something went wrong");
@@ -118,7 +115,6 @@ const Login = () => {
               {isLoginForm ? "Login" : "Sign Up"}
             </button>
           </div>
-
           <p
             className="m-auto cursor-pointer py-2"
             onClick={() => setIsLoginForm((value) => !value)}
@@ -132,4 +128,5 @@ const Login = () => {
     </div>
   );
 };
+
 export default Login;
