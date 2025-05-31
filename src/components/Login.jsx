@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import { addUser } from "../utils/userSlice";
@@ -14,6 +14,12 @@ const Login = () => {
   const [error, setError] = useState("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const timeTaken = performance.now();
+    console.log(`Login page loaded in ${timeTaken.toFixed(2)} ms`);
+  }, []);
+
 
   const handleLogin = async () => {
     try {
